@@ -22,6 +22,21 @@
 
 ---
 
+## 🖼 界面预览
+
+<p>
+  <img src="docs/images/screenshots/home.png" alt="GEOFlow 首页预览" width="48%" />
+  <img src="docs/images/screenshots/task-management.png" alt="GEOFlow 任务管理预览" width="48%" />
+</p>
+<p>
+  <img src="docs/images/screenshots/article-management.png" alt="GEOFlow 文章管理预览" width="48%" />
+  <img src="docs/images/screenshots/ai-config.png" alt="GEOFlow AI 配置器预览" width="48%" />
+</p>
+
+这四个页面基本覆盖了站点首页、任务调度、文章流程和模型配置这几条主链路。其余后台页面说明保留在 `docs/`，不堆在首页。
+
+---
+
 ## 🏗 运行结构
 
 ```
