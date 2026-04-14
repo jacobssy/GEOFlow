@@ -1,30 +1,30 @@
-# GEOFlow CLI 使用说明
+# GEOFlow CLI ガイド
 
 > Languages: [简体中文](GEOFLOW_CLI.md) | [English](GEOFLOW_CLI_en.md) | [日本語](GEOFLOW_CLI_ja.md) | [Español](GEOFLOW_CLI_es.md) | [Русский](GEOFLOW_CLI_ru.md)
 
-`geoflow` 是第一阶段 API 的本地命令行入口。
+`geoflow` は第1段階 API のローカル CLI 入口です。
 
-它只通过正式 `/api/v1` 与系统通信，不直接访问数据库，也不复用后台 session。
+GEOFlow とは正式な `/api/v1` を通じてのみ通信します。DB へ直接アクセスせず、管理画面 session も再利用しません。
 
-## 1. 命令入口
+## 1. 実行入口
 
 ```bash
 ./bin/geoflow help
 ```
 
-## 2. 配置优先级
+## 2. 設定優先順位
 
-支持三种来源：
+設定ソース:
 
-1. CLI 参数
-2. 环境变量
-3. 配置文件
+1. CLI 引数
+2. 環境変数
+3. 設定ファイル
 
-优先级：
+優先順位:
 
-`CLI 参数 > 环境变量 > .geoflow.json > ~/.config/geoflow/config.json`
+`CLI 引数 > 環境変数 > .geoflow.json > ~/.config/geoflow/config.json`
 
-## 3. 推荐首次登录
+## 3. 初回ログイン
 
 ```bash
 ./bin/geoflow \
@@ -33,9 +33,9 @@
   --username admin
 ```
 
-如果不传 `--password`，CLI 会在终端里安全提示输入密码。
+`--password` を省略すると安全なプロンプトが出ます。
 
-如果你已经有 token，也可以手动初始化：
+トークンがある場合は手動初期化も可能です。
 
 ```bash
 ./bin/geoflow \
@@ -44,67 +44,67 @@
   --token gf_xxx
 ```
 
-查看当前配置：
+現在の設定確認:
 
 ```bash
 ./bin/geoflow config show
 ```
 
-## 4. 常用命令
+## 4. よく使うコマンド
 
-获取资源字典：
+catalog:
 
 ```bash
 ./bin/geoflow catalog
 ```
 
-查询任务：
+タスク一覧:
 
 ```bash
 ./bin/geoflow task list --status active
 ```
 
-创建任务：
+タスク作成:
 
 ```bash
 ./bin/geoflow task create --json ./task.json
 ```
 
-启动任务并立即入队：
+開始と入隊:
 
 ```bash
 ./bin/geoflow task start 12
 ./bin/geoflow task enqueue 12
 ```
 
-查看任务和 job：
+job 照会:
 
 ```bash
 ./bin/geoflow task jobs 12 --limit 20
 ./bin/geoflow job get 88
 ```
 
-上传文章草稿：
+記事作成:
 
 ```bash
 ./bin/geoflow article create \
-  --title "CLI 测试文章" \
+  --title "CLI test article" \
   --content-file ./article.md \
   --task-id 12 \
   --author-id 5 \
   --category-id 2
 ```
 
-审核并发布：
+レビューと公開:
 
 ```bash
 ./bin/geoflow article review 101 --status approved --note "CLI review pass"
 ./bin/geoflow article publish 101
 ```
 
-## 5. JSON 输入示例
+## 5. JSON 入力例
 
-任务创建：
+タスク作成:
 
 ```json
 {
@@ -128,12 +128,12 @@
 }
 ```
 
-文章创建：
+記事作成:
 
 ```json
 {
   "title": "CLI Article Test",
-  "content": "# CLI Article Test\n\n这是通过 CLI 创建的文章。",
+  "content": "# CLI Article Test\n\nThis article was created through the CLI.",
   "task_id": 12,
   "author_id": 5,
   "category_id": 2,
@@ -144,30 +144,17 @@
 }
 ```
 
-## 6. 幂等键
+## 6. 冪等キー
 
-所有写操作都支持：
+書き込み系コマンドは以下をサポートします。
 
 ```text
 --idempotency-key <key>
 ```
 
-推荐用于：
+## 7. 対応範囲
 
-- `task create`
-- `task update`
-- `task start`
-- `task stop`
-- `task enqueue`
-- `article create`
-- `article update`
-- `article review`
-- `article publish`
-- `article trash`
-
-## 7. 当前支持范围
-
-当前 CLI 已覆盖：
+現在の対応:
 
 - `login`
 - `catalog`
@@ -175,9 +162,9 @@
 - `job get`
 - `article list/create/get/update/review/publish/trash`
 
-当前还没有纳入：
+未対応:
 
-- URL 导入
-- 标题异步生成
-- 图片上传编排
-- 更高阶的批量工作流
+- URL import
+- 非同期タイトル生成
+- 画像アップロードの編成
+- 高階バッチワークフロー

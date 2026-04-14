@@ -1,30 +1,30 @@
-# GEOFlow CLI 使用说明
+# GEOFlow CLI Guide
 
 > Languages: [简体中文](GEOFLOW_CLI.md) | [English](GEOFLOW_CLI_en.md) | [日本語](GEOFLOW_CLI_ja.md) | [Español](GEOFLOW_CLI_es.md) | [Русский](GEOFLOW_CLI_ru.md)
 
-`geoflow` 是第一阶段 API 的本地命令行入口。
+`geoflow` is the local CLI entry for the first-stage API.
 
-它只通过正式 `/api/v1` 与系统通信，不直接访问数据库，也不复用后台 session。
+It talks to GEOFlow only through the formal `/api/v1` endpoints. It does not access the database directly and does not reuse the admin web session.
 
-## 1. 命令入口
+## 1. Entry
 
 ```bash
 ./bin/geoflow help
 ```
 
-## 2. 配置优先级
+## 2. Configuration Priority
 
-支持三种来源：
+Supported sources:
 
-1. CLI 参数
-2. 环境变量
-3. 配置文件
+1. CLI flags
+2. environment variables
+3. config files
 
-优先级：
+Priority:
 
-`CLI 参数 > 环境变量 > .geoflow.json > ~/.config/geoflow/config.json`
+`CLI flags > environment variables > .geoflow.json > ~/.config/geoflow/config.json`
 
-## 3. 推荐首次登录
+## 3. Recommended First Login
 
 ```bash
 ./bin/geoflow \
@@ -33,9 +33,9 @@
   --username admin
 ```
 
-如果不传 `--password`，CLI 会在终端里安全提示输入密码。
+If `--password` is omitted, the CLI prompts for it securely.
 
-如果你已经有 token，也可以手动初始化：
+If you already have a token, you can also initialize manually:
 
 ```bash
 ./bin/geoflow \
@@ -44,67 +44,67 @@
   --token gf_xxx
 ```
 
-查看当前配置：
+Check current config:
 
 ```bash
 ./bin/geoflow config show
 ```
 
-## 4. 常用命令
+## 4. Common Commands
 
-获取资源字典：
+Fetch catalog:
 
 ```bash
 ./bin/geoflow catalog
 ```
 
-查询任务：
+List tasks:
 
 ```bash
 ./bin/geoflow task list --status active
 ```
 
-创建任务：
+Create a task:
 
 ```bash
 ./bin/geoflow task create --json ./task.json
 ```
 
-启动任务并立即入队：
+Start and enqueue:
 
 ```bash
 ./bin/geoflow task start 12
 ./bin/geoflow task enqueue 12
 ```
 
-查看任务和 job：
+Query jobs:
 
 ```bash
 ./bin/geoflow task jobs 12 --limit 20
 ./bin/geoflow job get 88
 ```
 
-上传文章草稿：
+Create an article:
 
 ```bash
 ./bin/geoflow article create \
-  --title "CLI 测试文章" \
+  --title "CLI test article" \
   --content-file ./article.md \
   --task-id 12 \
   --author-id 5 \
   --category-id 2
 ```
 
-审核并发布：
+Review and publish:
 
 ```bash
 ./bin/geoflow article review 101 --status approved --note "CLI review pass"
 ./bin/geoflow article publish 101
 ```
 
-## 5. JSON 输入示例
+## 5. JSON Input Examples
 
-任务创建：
+Task creation:
 
 ```json
 {
@@ -128,12 +128,12 @@
 }
 ```
 
-文章创建：
+Article creation:
 
 ```json
 {
   "title": "CLI Article Test",
-  "content": "# CLI Article Test\n\n这是通过 CLI 创建的文章。",
+  "content": "# CLI Article Test\n\nThis article was created through the CLI.",
   "task_id": 12,
   "author_id": 5,
   "category_id": 2,
@@ -144,15 +144,15 @@
 }
 ```
 
-## 6. 幂等键
+## 6. Idempotency Key
 
-所有写操作都支持：
+All write commands support:
 
 ```text
 --idempotency-key <key>
 ```
 
-推荐用于：
+Recommended for:
 
 - `task create`
 - `task update`
@@ -165,9 +165,9 @@
 - `article publish`
 - `article trash`
 
-## 7. 当前支持范围
+## 7. Current Coverage
 
-当前 CLI 已覆盖：
+Current CLI coverage:
 
 - `login`
 - `catalog`
@@ -175,9 +175,9 @@
 - `job get`
 - `article list/create/get/update/review/publish/trash`
 
-当前还没有纳入：
+Not covered yet:
 
-- URL 导入
-- 标题异步生成
-- 图片上传编排
-- 更高阶的批量工作流
+- URL import
+- async title generation
+- image upload orchestration
+- higher-level batch workflows
